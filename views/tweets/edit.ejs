@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit your fleet</title>
+</head>
+
+<body>
+    <h1> Edit | Flitter </h1>
+    <hr>
+    <form action="/tweets/<%= theTweet._id %>?_method=PUT" method="POST">
+        <label for="username">Username:</label> </br>
+        <input type="text" name="username" id="username" value="<%= theTweet.username %>"></br>
+        <label for="tweet">Tweet:</label> </br>
+        <textarea name="tweet" id="tweet" cols="30" rows="5"><%= theTweet.tweet %></textarea>
+        </br>
+        <label for="time">Enter the current time:</label> </br>
+        <input type="time" name="time" id="time" value="<%= theTweet.time %>"> </br> </br>
+        <button>Edit</button> <a href="/tweets/<%= theTweet._id %>">Cancel</a>
+    </form>
+</body>
+
+</html>

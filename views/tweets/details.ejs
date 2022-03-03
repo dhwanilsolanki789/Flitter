@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet by <%= theTweet.username %>
+    </title>
+</head>
+
+<body>
+    <h1>Details | Flitter</h1>
+    <h3>
+        <b>
+            <%= theTweet.username %>
+                <% if(theTweet.username==="Flitter" ) { %>
+                    &reg;
+                    <% } %>
+        </b>
+    </h3>
+    <div>
+        <%= theTweet.tweet %>
+    </div>
+    <hr>
+    <div>
+        <b>
+            <%= theTweet.likes %>
+        </b> Likes &middot;
+        <%= t12hr %>
+    </div>
+    </br>
+    <a href="/tweets/<%= theTweet._id %>/edit">Edit your tweet</a>
+    <form action="/tweets/<%= theTweet._id %>?_method=DELETE" method="POST">
+        <button>Delete tweet</button>
+    </form> </br>
+    <a href="/tweets">Back to home</a>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create your own fleet</title>
+</head>
+
+<body>
+    <h1> New | Flitter </h1>
+    <hr>
+    <form action="/tweets" method="POST">
+        <label for="username">Username:</label> </br>
+        <input type="text" name="username" id="username" placeholder="Write your username"></br>
+        <label for="tweet">Tweet:</label> </br>
+        <textarea name="tweet" id="tweet" cols="30" rows="5">Your tweet here...</textarea> </br>
+        <label for="time">Enter the current time:</label> </br>
+        <input type="time" name="time" id="time"> </br> </br>
+        <button>Post</button> <a href="/tweets">Cancel</a>
+    </form>
+</body>
+
+</html>
