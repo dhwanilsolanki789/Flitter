@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
+import ejsMate from "ejs-mate";
 import path from "path";
 import Tweet from "./models/tweet.js";
 import { t12, getLikes } from "./functions/time.js";
@@ -24,26 +25,27 @@ const app = express();
 
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
+app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-app.get("/tweets", async (req, res) => {
+app.get("/fleets", async (req, res) => {
 	const allTweets = await Tweet.find({});
 	res.render("tweets/tweet.ejs", { allTweets });
 });
 
-app.get("/tweets/new", (req, res) => {
+app.get("/fleets/new", (req, res) => {
 	res.render("tweets/new.ejs");
 });
 
-app.get("/tweets/:id", async (req, res) => {
+app.get("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
 	const theTweet = await Tweet.findById(id);
 	const t12hr = t12(theTweet.time);
 	res.render("tweets/details.ejs", { theTweet, t12hr });
 });
 
-app.get("/tweets/:id/edit", async (req, res) => {
+app.get("/fleets/:id/edit", async (req, res) => {
 	const { id } = req.params;
 	const theTweet = await Tweet.findById(id);
 	const t12hr = t12(theTweet.time);
@@ -54,7 +56,7 @@ app.get("/", (req, res) => {
 	res.send("GREAT SUCCESS!");
 });
 
-app.post("/tweets", async (req, res) => {
+app.post("/fleets", async (req, res) => {
 	const { username, tweet, time } = req.body;
 	const likes = getLikes();
 	const newTweet = {
@@ -64,10 +66,10 @@ app.post("/tweets", async (req, res) => {
 		likes,
 	};
 	await Tweet.insertMany([newTweet]);
-	res.redirect("/tweets");
+	res.redirect("/fleets");
 });
 
-app.put("/tweets/:id", async (req, res) => {
+app.put("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
 	const { username, tweet, time } = req.body;
 	await Tweet.findByIdAndUpdate(
@@ -75,13 +77,13 @@ app.put("/tweets/:id", async (req, res) => {
 		{ username, tweet, time },
 		{ runValidators: true }
 	);
-	res.redirect(`/tweets/${id}`);
+	res.redirect(`/fleets/${id}`);
 });
 
-app.delete("/tweets/:id", async (req, res) => {
+app.delete("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
 	await Tweet.findByIdAndDelete(id);
-	res.redirect("/tweets");
+	res.redirect("/fleets");
 });
 
 app.listen(3000, () => {

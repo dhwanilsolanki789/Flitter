@@ -11,6 +11,8 @@ mongoose
 		console.log(err);
 	});
 
+// Check by seeding single data object
+
 /* const testfleet = new Tweet({
 	username: "dhwanilsolanki789",
 	tweet: "Checking my flitter status",
@@ -26,7 +28,9 @@ testfleet
 		console.log(e);
 	}); */
 
-const data = [
+//Seed multiple data in the database
+
+/* const data = [
 	{
 		username: "paineAlice",
 		tweet: "Done with my first fleet <3",
@@ -64,6 +68,7 @@ const data = [
 		likes: 99287,
 	},
 ];
+
 Tweet.insertMany(data)
 	.then((res) => {
 		console.log(res);
@@ -72,3 +77,4 @@ Tweet.insertMany(data)
 		console.log("Couldnt insert :((");
 		console.log(e);
 	});
+ */
