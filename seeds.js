@@ -15,7 +15,7 @@ mongoose
 
 /* const testfleet = new Tweet({
 	username: "dhwanilsolanki789",
-	fleet: "Checking my flitter status",
+	text: "Checking my flitter status",
 });
 
 testfleet
@@ -33,37 +33,37 @@ testfleet
 //  const data = [
 // 	{
 // 		username: "paineAlice",
-// 		fleet: "Done with my first fleet <3",
+// 		text: "Done with my first fleet <3",
 // 		time: "18:45",
 // 		likes: 73774,
 // 	},
 // 	{
 // 		username: "steveDetamble",
-// 		fleet: "Guys, i think you should bring dms :)",
+// 		text: "Guys, i think you should bring dms :)",
 // 		time: "01:39",
 // 		likes: 1105,
 // 	},
 // 	{
 // 		username: "DevKothari",
-// 		fleet: "Another shitty social media site..",
+// 		text: "Another shitty social media site..",
 // 		time: "10:25",
 // 		likes: 5480,
 // 	},
 // 	{
 // 		username: "AndrewFC",
-// 		fleet: "Andrew is the best SPIDERMAN no cap!!",
+// 		text: "Andrew is the best SPIDERMAN no cap!!",
 // 		time: "14:41",
 // 		likes: 11345,
 // 	},
 // 	{
 // 		username: "Kevinf",
-// 		fleet: "SHUT the FUck upppppp",
+// 		text: "SHUT the FUck upppppp",
 // 		time: "06:47",
 // 		likes: 32344,
 // 	},
 // 	{
 // 		username: "Flitter",
-// 		fleet: "@elonmusk this is not twitter please stfu!!",
+// 		text: "@elonmusk this is not twitter please stfu!!",
 // 		time: "22:37",
 // 		likes: 99287,
 // 	},

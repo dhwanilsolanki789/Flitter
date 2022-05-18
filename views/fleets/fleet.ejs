@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate.ejs') -%>
-    <h1>Home | Flitter</h1>
+    <h1 class="px-4">Home | Flitter</h1>
     <hr>
 
     <div class="offset-2 col-8">
@@ -15,7 +15,7 @@
                                 <%= t.username %>
                             </h5>
                             <p class="card-text">
-                                <%= t.fleet %>
+                                <%= t.text %>
                             </p>
                             <a href="/fleets/<%= t._id%>" class="card-link">Details</a>
                         </div>

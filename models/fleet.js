@@ -6,7 +6,7 @@ const fleetSchema = new mongoose.Schema({
 		required: true,
 		maxlength: 25,
 	},
-	fleet: {
+	text: {
 		type: String,
 		required: true,
 	},
