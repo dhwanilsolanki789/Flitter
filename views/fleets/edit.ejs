@@ -1,22 +1,23 @@
 <% layout('layouts/boilerplate.ejs') -%>
-    <h1><span class="me-4"><a href="/fleets/<%= theTweet._id %>" class="text-dark"
+    <h1><span class="me-4"><a href="/fleets/<%= theFleet._id %>" class="text-dark"
                 style="text-decoration:none">&loarr;</a></span> Edit |
         Flitter </h1>
     <hr>
     <div class="container mt-4">
-        <form action="/fleets/<%= theTweet._id %>?_method=PUT" method="POST">
+        <form action="/fleets/<%= theFleet._id %>?_method=PUT" method="POST">
             <div class="mb-3 offset-3 col-6">
                 <label for="username" class="form-label">Username:</label> </br>
-                <input type="text" name="username" id="username" class="form-control" value="<%= theTweet.username %>">
+                <input type="text" name="fleet[username]" id="username" class="form-control"
+                    value="<%= theFleet.username %>">
             </div>
             <div class="mb-3 offset-3 col-6">
-                <label for="tweet" class="form-label">Fleet:</label> </br>
-                <textarea name="tweet" id="tweet" cols="30" rows="3"
-                    class="form-control"><%= theTweet.tweet %></textarea>
+                <label for="fleet" class="form-label">Fleet:</label> </br>
+                <textarea name="fleet[fleet]" id="fleet" cols="30" rows="3"
+                    class="form-control"><%= theFleet.fleet %></textarea>
             </div>
             <div class="mb-3 offset-3 col-2">
                 <label for="time" class="form-label">Enter the current time:</label> </br>
-                <input type="time" name="time" id="time" class="form-control" value="<%= theTweet.time %>">
+                <input type="time" name="fleet[time]" id="time" class="form-control" value="<%= theFleet.time %>">
             </div>
             <div class="mb-3 offset-3">
                 <button class="btn btn-warning">Edit</button>

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const tweetSchema = new mongoose.Schema({
+const fleetSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		required: true,
 		maxlength: 25,
 	},
-	tweet: {
+	fleet: {
 		type: String,
 		required: true,
 	},
@@ -21,6 +21,6 @@ const tweetSchema = new mongoose.Schema({
 	},
 });
 
-const Tweet = mongoose.model("Tweet", tweetSchema);
+const Fleet = mongoose.model("Fleet", fleetSchema);
 
-export default Tweet;
+export default Fleet;

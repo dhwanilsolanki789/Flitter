@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import methodOverride from "method-override";
 import ejsMate from "ejs-mate";
 import path from "path";
-import Tweet from "./models/tweet.js";
+import Fleet from "./models/fleet.js";
 import { t12, getLikes } from "./functions/time.js";
 
 import { fileURLToPath } from "url";
@@ -30,26 +30,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/fleets", async (req, res) => {
-	const allTweets = await Tweet.find({});
-	res.render("tweets/tweet.ejs", { allTweets });
+	const allFleets = await Fleet.find({});
+	res.render("fleets/fleet.ejs", { allFleets });
 });
 
 app.get("/fleets/new", (req, res) => {
-	res.render("tweets/new.ejs");
+	res.render("fleets/new.ejs");
 });
 
 app.get("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
-	const theTweet = await Tweet.findById(id);
-	const t12hr = t12(theTweet.time);
-	res.render("tweets/details.ejs", { theTweet, t12hr });
+	const theFleet = await Fleet.findById(id);
+	const t12hr = t12(theFleet.time);
+	res.render("fleets/details.ejs", { theFleet, t12hr });
 });
 
 app.get("/fleets/:id/edit", async (req, res) => {
 	const { id } = req.params;
-	const theTweet = await Tweet.findById(id);
-	const t12hr = t12(theTweet.time);
-	res.render("tweets/edit.ejs", { theTweet, t12hr });
+	const theFleet = await Fleet.findById(id);
+	const t12hr = t12(theFleet.time);
+	res.render("fleets/edit.ejs", { theFleet, t12hr });
 });
 
 app.get("/", (req, res) => {
@@ -57,24 +57,23 @@ app.get("/", (req, res) => {
 });
 
 app.post("/fleets", async (req, res) => {
-	const { username, tweet, time } = req.body;
+	const { username, fleet, time } = req.body.fleet;
 	const likes = getLikes();
-	const newTweet = {
+	const newFleet = {
 		username,
-		tweet,
+		fleet,
 		time,
 		likes,
 	};
-	await Tweet.insertMany([newTweet]);
+	await Fleet.insertMany([newFleet]);
 	res.redirect("/fleets");
 });
 
 app.put("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
-	const { username, tweet, time } = req.body;
-	await Tweet.findByIdAndUpdate(
+	await Fleet.findByIdAndUpdate(
 		id,
-		{ username, tweet, time },
+		req.body.fleet,
 		{ runValidators: true }
 	);
 	res.redirect(`/fleets/${id}`);
@@ -82,7 +81,7 @@ app.put("/fleets/:id", async (req, res) => {
 
 app.delete("/fleets/:id", async (req, res) => {
 	const { id } = req.params;
-	await Tweet.findByIdAndDelete(id);
+	await Fleet.findByIdAndDelete(id);
 	res.redirect("/fleets");
 });
 

@@ -7,7 +7,7 @@
             <a href="/fleets/new" style="margin-left: 20px;">New Fleet</a>
         </div>
         <ul style="list-style-type:none">
-            <% for(let t of allTweets) { %>
+            <% for(let t of allFleets) { %>
                 <li>
                     <div class="card">
                         <div class="card-body">
@@ -15,7 +15,7 @@
                                 <%= t.username %>
                             </h5>
                             <p class="card-text">
-                                <%= t.tweet %>
+                                <%= t.fleet %>
                             </p>
                             <a href="/fleets/<%= t._id%>" class="card-link">Details</a>
                         </div>

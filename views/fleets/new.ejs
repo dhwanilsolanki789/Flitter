@@ -6,15 +6,17 @@
         <form action="/fleets" method="POST">
             <div class="mb-3 offset-3 col-6">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="Write your username">
+                <input type="text" name="fleet[username]" id="username" class="form-control"
+                    placeholder="Write your username" required>
             </div>
             <div class="mb-3 offset-3 col-6">
-                <label for="tweet" class="form-label">Fleet:</label>
-                <textarea name="tweet" id="tweet" cols="30" rows="5" class="form-control">Your fleet here...</textarea>
+                <label for="fleet" class="form-label">Fleet:</label>
+                <textarea name="fleet[fleet]" id="fleet" cols="30" rows="5" class="form-control"
+                    placeholder="Your fleet here..." required></textarea>
             </div>
             <div class="mb-3 offset-3 col-6">
                 <label for="time" class="form-label">Enter the current time:</label>
-                <input type="time" name="time" id="time" class="form-control">
+                <input type="time" name="fleet[time]" id="time" class="form-control" required>
             </div>
             <div class="mb-3 offset-3">
                 <button class="btn btn-success">Post</button>

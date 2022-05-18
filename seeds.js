@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Tweet from "./models/tweet.js";
+import Fleet from "./models/fleet.js";
 
 mongoose
 	.connect("mongodb://localhost:27017/flitter")
@@ -15,7 +15,7 @@ mongoose
 
 /* const testfleet = new Tweet({
 	username: "dhwanilsolanki789",
-	tweet: "Checking my flitter status",
+	fleet: "Checking my flitter status",
 });
 
 testfleet
@@ -30,51 +30,52 @@ testfleet
 
 //Seed multiple data in the database
 
-/* const data = [
-	{
-		username: "paineAlice",
-		tweet: "Done with my first fleet <3",
-		time: "18:45",
-		likes: 73774,
-	},
-	{
-		username: "steveDetamble",
-		tweet: "Guys, i think you should bring dms :)",
-		time: "01:39",
-		likes: 1105,
-	},
-	{
-		username: "DevKothari",
-		tweet: "Another shitty social media site..",
-		time: "10:25",
-		likes: 5480,
-	},
-	{
-		username: "AndrewFC",
-		tweet: "Andrew is the best SPIDERMAN no cap!!",
-		time: "14:41",
-		likes: 11345,
-	},
-	{
-		username: "Kevinf",
-		tweet: "SHUT the FUck upppppp",
-		time: "06:47",
-		likes: 32344,
-	},
-	{
-		username: "Flitter",
-		tweet: "@elonmusk this is not twitter please stfu!!",
-		time: "22:37",
-		likes: 99287,
-	},
-];
+//  const data = [
+// 	{
+// 		username: "paineAlice",
+// 		fleet: "Done with my first fleet <3",
+// 		time: "18:45",
+// 		likes: 73774,
+// 	},
+// 	{
+// 		username: "steveDetamble",
+// 		fleet: "Guys, i think you should bring dms :)",
+// 		time: "01:39",
+// 		likes: 1105,
+// 	},
+// 	{
+// 		username: "DevKothari",
+// 		fleet: "Another shitty social media site..",
+// 		time: "10:25",
+// 		likes: 5480,
+// 	},
+// 	{
+// 		username: "AndrewFC",
+// 		fleet: "Andrew is the best SPIDERMAN no cap!!",
+// 		time: "14:41",
+// 		likes: 11345,
+// 	},
+// 	{
+// 		username: "Kevinf",
+// 		fleet: "SHUT the FUck upppppp",
+// 		time: "06:47",
+// 		likes: 32344,
+// 	},
+// 	{
+// 		username: "Flitter",
+// 		fleet: "@elonmusk this is not twitter please stfu!!",
+// 		time: "22:37",
+// 		likes: 99287,
+// 	},
+// ];
 
-Tweet.insertMany(data)
-	.then((res) => {
-		console.log(res);
-	})
-	.catch((e) => {
-		console.log("Couldnt insert :((");
-		console.log(e);
-	});
- */
+// await Fleet.deleteMany({});
+// Fleet.insertMany(data)
+// 	.then((res) => {
+// 		console.log(res);
+// 	})
+// 	.catch((e) => {
+// 		console.log("Couldnt insert :((");
+// 		console.log(e);
+// 	});
+

@@ -7,28 +7,28 @@
             <div class="card-body">
                 <h5 class="card-title">
                     <strong>
-                        <%= theTweet.username %>
-                            <% if(theTweet.username==="Flitter" ) { %>
+                        <%= theFleet.username %>
+                            <% if(theFleet.username==="Flitter" ) { %>
                                 &reg;
                                 <% } %>
                     </strong>
                 </h5>
                 <p class="card-text">
                 <div>
-                    <%= theTweet.tweet %>
+                    <%= theFleet.fleet %>
                 </div>
                 <hr>
                 <div>
                     <b>
-                        <%= theTweet.likes %>
+                        <%= theFleet.likes %>
                     </b> Likes &middot;
                     <%= t12hr %>
                 </div>
                 </p>
-                <form style="display: inline-block;" action="/fleets/<%= theTweet._id %>/edit">
+                <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>/edit">
                     <button class="btn btn-info">Edit tweet</button>
                 </form>
-                <form style="display: inline-block;" action="/fleets/<%= theTweet._id %>?_method=DELETE" method="POST">
+                <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete tweet</button>
                 </form>
             </div>
