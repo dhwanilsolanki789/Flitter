@@ -6,14 +6,21 @@
         <div class="container py-3">
             <a href="/fleets/new" style="margin-left: 20px;">New Fleet</a>
         </div>
-        <ul>
+        <ul style="list-style-type:none">
             <% for(let t of allTweets) { %>
                 <li>
-                    <strong>
-                        <%= t.username %>
-                    </strong> </br>
-                    <%= t.tweet %> <a href="/fleets/<%= t._id%>">Details</a>
-                </li> </br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= t.username %>
+                            </h5>
+                            <p class="card-text">
+                                <%= t.tweet %>
+                            </p>
+                            <a href="/fleets/<%= t._id%>" class="card-link">Details</a>
+                        </div>
+                    </div>
+                </li>
                 <% } %>
         </ul>
     </div>

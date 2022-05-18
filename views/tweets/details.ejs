@@ -3,27 +3,34 @@
         Details | Flitter</h1>
     <hr>
     <div class="offset-3 col-6">
-        <h3>
-            <b>
-                <%= theTweet.username %>
-                    <% if(theTweet.username==="Flitter" ) { %>
-                        &reg;
-                        <% } %>
-            </b>
-        </h3>
-        <div>
-            <%= theTweet.tweet %>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <strong>
+                        <%= theTweet.username %>
+                            <% if(theTweet.username==="Flitter" ) { %>
+                                &reg;
+                                <% } %>
+                    </strong>
+                </h5>
+                <p class="card-text">
+                <div>
+                    <%= theTweet.tweet %>
+                </div>
+                <hr>
+                <div>
+                    <b>
+                        <%= theTweet.likes %>
+                    </b> Likes &middot;
+                    <%= t12hr %>
+                </div>
+                </p>
+                <form style="display: inline-block;" action="/fleets/<%= theTweet._id %>/edit">
+                    <button class="btn btn-info">Edit tweet</button>
+                </form>
+                <form style="display: inline-block;" action="/fleets/<%= theTweet._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete tweet</button>
+                </form>
+            </div>
+
         </div>
-        <hr>
-        <div>
-            <b>
-                <%= theTweet.likes %>
-            </b> Likes &middot;
-            <%= t12hr %>
-        </div>
-        </br>
-        <a href="/fleets/<%= theTweet._id %>/edit">Edit your tweet</a>
-        <form action="/fleets/<%= theTweet._id %>?_method=DELETE" method="POST">
-            <button>Delete tweet</button>
-        </form>
-    </div>
