@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate.ejs') -%>
+    <h1 class="px-4"> <span class="me-4"><a href="/fleets/<%= theFleet._id %>" class="text-dark"
+                style="text-decoration:none">&loarr;</a></span>
+        Details | Flitter</h1>
+    <hr>
+    <div class="offset-md-3 col-md-6 offset-sm-2 col-sm-8">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <%= theFleet.username %>
+                </h6>
+                <p class="card-text">
+                    <%= theFleet.text %>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">
+                    <strong>
+                        <%= theComment.username %>
+                    </strong>
+                </h4>
+                <h6 class="card-subtitle text-muted mb-2">
+                    Replying to <%= theFleet.username %>
+                </h6>
+                <p class="card-text">
+                    <%= theComment.text %>
+                </p>
+                <hr>
+                <div>
+                    <b>
+                        <%= theComment.likes %>
+                    </b> Likes &middot;
+                    <%= theComment.time %>
+                </div>
+                <form action="/fleets/<%= theFleet._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>

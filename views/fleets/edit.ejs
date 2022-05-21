@@ -3,7 +3,7 @@
                 style="text-decoration:none">&loarr;</a></span> Edit |
         Flitter </h1>
     <hr>
-    <div class="container mt-4">
+    <div class="container mt-4 ">
         <form action="/fleets/<%= theFleet._id %>?_method=PUT" method="POST" class="validate-form" novalidate>
             <div class="mb-3 offset-3 col-6">
                 <label for="username" class="form-label">Username:</label> </br>
@@ -15,35 +15,8 @@
                 <textarea name="fleet[text]" id="text" cols="30" rows="3" class="form-control"
                     required><%= theFleet.text %></textarea>
             </div>
-            <div class="mb-3 offset-3 col-2">
-                <label for="time" class="form-label">Enter the current time:</label> </br>
-                <input type="time" name="fleet[time]" id="time" class="form-control" value="<%= theFleet.time %>"
-                    required>
-            </div>
             <div class="mb-3 offset-3">
                 <button class="btn btn-warning">Edit</button>
             </div>
         </form>
     </div>
-
-    <script>
-        (function () {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.validate-form')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>

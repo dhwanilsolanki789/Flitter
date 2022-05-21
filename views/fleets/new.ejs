@@ -15,34 +15,8 @@
                 <textarea name="fleet[text]" id="text" cols="30" rows="5" class="form-control"
                     placeholder="Your fleet here..." required></textarea>
             </div>
-            <div class="mb-3 offset-3 col-2">
-                <label for="time" class="form-label">Enter the current time:</label>
-                <input type="time" name="fleet[time]" id="time" class="form-control" required>
-            </div>
             <div class="mb-3 offset-3">
                 <button class="btn btn-success">Post</button>
             </div>
         </form>
     </div>
-
-    <script>
-        (function () {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.validate-form')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-    </script>

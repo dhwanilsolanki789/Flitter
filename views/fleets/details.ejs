@@ -3,17 +3,14 @@
                 style="text-decoration:none">&loarr;</a></span>
         Details | Flitter</h1>
     <hr>
-    <div class="offset-3 col-6">
+    <div class="offset-md-3 col-md-6 offset-sm-2 col-sm-8">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">
+                <h4 class="card-title">
                     <strong>
                         <%= theFleet.username %>
-                            <% if(theFleet.username==="Flitter" ) { %>
-                                &reg;
-                                <% } %>
                     </strong>
-                </h5>
+                </h4>
                 <p class="card-text">
                 <div>
                     <%= theFleet.text %>
@@ -23,15 +20,62 @@
                     <b>
                         <%= theFleet.likes %>
                     </b> Likes &middot;
-                    <%= t12hr %>
+                    <%= theFleet.time %>
                 </div>
                 </p>
                 <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>/edit">
                     <button class="btn btn-info">Edit tweet</button>
                 </form>
-                <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>?_method=DELETE" method="POST">
+                <form class="mb-3" style="display: inline-block;" action="/fleets/<%= theFleet._id %>?_method=DELETE"
+                    method="POST">
                     <button class="btn btn-danger">Delete tweet</button>
+                </form> </br>
+                <h6>Leave a comment</h6>
+                <form action="/fleets/<%= theFleet._id %>/comments" method="POST" class="validate-form" novalidate>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" name="comment[username]" id="username" class="form-control"
+                                placeholder="Your username" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <textarea name="comment[text]" id="text" cols="10" rows="2" class="form-control"
+                                placeholder="Reply to fleet" required></textarea>
+                        </div>
+                        <div class="col-md-2 pt-3">
+                            <button class="btn btn-sm btn-success">Post</button>
+                        </div>
+                    </div>
                 </form>
             </div>
 
         </div>
+        <% for(let comment of theFleet.comments) {%>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= comment.username %>
+                    </h5>
+                    <h6 class="card-subtitle text-muted mb-2">
+                        Replying to <%= theFleet.username %>
+                    </h6>
+                    <p class="card-text">
+                    <div class="row">
+                        <div class="col-10">
+                            <%= comment.text %></br>
+                                <a href="/fleets/<%= theFleet._id %>/comments/<%= comment._id %>">Details</a>
+                        </div>
+                        <div class="col-2">
+                            <form action="/fleets/<%= theFleet._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    </p>
+                </div>
+            </div>
+            <% } %>
+    </div>

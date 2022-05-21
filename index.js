@@ -4,15 +4,16 @@ import methodOverride from "method-override";
 import ejsMate from "ejs-mate";
 import path from "path";
 import Fleet from "./models/fleet.js";
+import Comment from "./models/comment.js";
 import Joi from "joi";
-import fleetSchema from "./schemas.js";
+import fleetSchema from "./joiSchemas/joiFleet.js";
+import commentSchema from "./joiSchemas/joiComment.js";
 import { expressError } from "./utils/expressError.js";
 import { catchAsync } from "./utils/catchAsync.js";
-import { t12, getLikes } from "./utils/helper.js";
+import { convertISt12, getLikes, } from "./utils/helper.js";
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import { nextTick } from "process";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -44,6 +45,16 @@ const validateFleet = (req,res,next) => {
 	}
 }
 
+const validateComment = (req,res,next) => {
+	const { error } = commentSchema.validate(req.body);
+	if(error) {
+		const msg = error.details.map(el => el.message).join(',');
+		throw new expressError(msg,400);
+	} else {
+		next();
+	}
+}
+
 app.get("/fleets", catchAsync(async (req, res) => {
 	const allFleets = await Fleet.find({});
 	res.render("fleets/fleet.ejs", { allFleets });
@@ -55,11 +66,10 @@ app.get("/fleets/new", (req, res) => {
 
 app.get("/fleets/:id", catchAsync(async (req, res, next) => {
 		const { id } = req.params;
-		const theFleet = await Fleet.findById(id);
+		const theFleet = await Fleet.findById(id).populate("comments");
 		if(!theFleet)
 			throw new expressError("Fleet not found!!",404);
-		const t12hr = t12(theFleet.time);
-		res.render("fleets/details.ejs", { theFleet, t12hr });
+		res.render("fleets/details.ejs", { theFleet });
 }));
 
 app.get("/fleets/:id/edit", catchAsync(async (req, res) => {
@@ -67,29 +77,47 @@ app.get("/fleets/:id/edit", catchAsync(async (req, res) => {
 	const theFleet = await Fleet.findById(id);
 	if(!theFleet)
 		throw new expressError("Fleet not found!!",404);
-	const t12hr = t12(theFleet.time);
-	res.render("fleets/edit.ejs", { theFleet, t12hr });
+	res.render("fleets/edit.ejs", { theFleet });
 }));
+
+app.get("/fleets/:id/comments/:cid", catchAsync(async (req,res) => {
+	const { id, cid } = req.params;
+	const theFleet = await Fleet.findById(id);
+	const theComment = await Comment.findById(cid).populate('fleet');
+	if(!theComment)
+		throw new expressError("Comment not found!",404);
+	res.render("comments/details.ejs", { theComment, theFleet });
+}))
 
 app.get("/", (req, res) => {
 	res.send("GREAT SUCCESS!");
 });
 
 app.post("/fleets", validateFleet ,catchAsync(async (req, res) => {
-	// if(!req.body.fleet)
-	// 	throw new expressError("Invalid fleet data!",400);
-
 	req.body.fleet.likes = getLikes();
 	const newFleet = new Fleet(req.body.fleet);
+	var d = new Date(Date.now());
+	newFleet.time = convertISt12(d.toString());
 	await newFleet.save();
-	//await Fleet.insertMany([newFleet]);
 	res.redirect("/fleets");
+}));
+
+app.post("/fleets/:id/comments", validateComment ,catchAsync(async(req,res) => {
+	const { id } = req.params;
+	const theFleet = await Fleet.findById(id);
+	req.body.comment.likes = getLikes();
+	const newComment = new Comment(req.body.comment);
+	var d = new Date(Date.now());
+	newComment.time = convertISt12(d.toString());
+	theFleet.comments.push(newComment);
+	newComment.fleet = theFleet;
+	await theFleet.save();
+	await newComment.save();
+	res.redirect(`/fleets/${id}`);
 }));
 
 app.put("/fleets/:id", validateFleet,catchAsync(async (req, res) => {
 	const { id } = req.params;
-	// if(!req.body.fleet)
-	// 	throw new expressError("Invalid fleet data!",400);
 	await Fleet.findByIdAndUpdate(
 		id,
 		req.body.fleet,
@@ -103,6 +131,13 @@ app.delete("/fleets/:id", catchAsync(async (req, res) => {
 	await Fleet.findByIdAndDelete(id);
 	res.redirect("/fleets");
 }));
+
+app.delete("/fleets/:id/comments/:cid", catchAsync(async(req,res) => {
+	const { cid, id } = req.params;
+	await Fleet.findByIdAndUpdate(id,{$pull : {comments : cid}})
+	await Comment.findByIdAndDelete(cid);
+	res.redirect(`/fleets/${id}`); 
+}))
 
 app.all('*',(req,res,next) => {
 	next(new expressError("Page not found!",404));	

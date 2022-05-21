@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Fleet from "./models/fleet.js";
+import Comment from "./models/comment.js";
 
 mongoose
 	.connect("mongodb://localhost:27017/flitter")
@@ -34,37 +35,37 @@ testfleet
 // 	{
 // 		username: "paineAlice",
 // 		text: "Done with my first fleet <3",
-// 		time: "18:45",
+// 		time: "06:45 PM",
 // 		likes: 73774,
 // 	},
-// 	{
-// 		username: "steveDetamble",
-// 		text: "Guys, i think you should bring dms :)",
-// 		time: "01:39",
-// 		likes: 1105,
-// 	},
+// 	//{
+// 	//	username: "steveDetamble",
+// 	//	text: "Guys, i think you should bring dms :)",
+// 	//	time: "01:39 AM",
+// 	//	likes: 1105,
+// 	//},
 // 	{
 // 		username: "DevKothari",
 // 		text: "Another shitty social media site..",
-// 		time: "10:25",
+// 		time: "10:25 AM",
 // 		likes: 5480,
 // 	},
 // 	{
 // 		username: "AndrewFC",
 // 		text: "Andrew is the best SPIDERMAN no cap!!",
-// 		time: "14:41",
+// 		time: "02:41 PM",
 // 		likes: 11345,
 // 	},
 // 	{
 // 		username: "Kevinf",
 // 		text: "SHUT the FUck upppppp",
-// 		time: "06:47",
+// 		time: "06:47 AM",
 // 		likes: 32344,
 // 	},
 // 	{
 // 		username: "Flitter",
 // 		text: "@elonmusk this is not twitter please stfu!!",
-// 		time: "22:37",
+// 		time: "10:37 PM",
 // 		likes: 99287,
 // 	},
 // ];
@@ -78,4 +79,3 @@ testfleet
 // 		console.log("Couldnt insert :((");
 // 		console.log(e);
 // 	});
-
