@@ -28,18 +28,22 @@ router.get("/new", (req, res) => {
 });
 
 router.get("/:id", catchAsync(async (req, res, next) => {
-		const { id } = req.params;
-		const theFleet = await Fleet.findById(id).populate("comments");
-		if(!theFleet)
-			throw new expressError("Fleet not found!!",404);
-		res.render("fleets/details.ejs", { theFleet });
+	const { id } = req.params;
+	const theFleet = await Fleet.findById(id).populate("comments");
+	if(!theFleet){
+		req.flash('error', "Couldnt find that fleet!");
+		return res.redirect("/fleets");
+	}
+	res.render("fleets/details.ejs", { theFleet });
 }));
 
 router.get("/:id/edit", catchAsync(async (req, res) => {
 	const { id } = req.params;
 	const theFleet = await Fleet.findById(id);
-	if(!theFleet)
-		throw new expressError("Fleet not found!!",404);
+	if(!theFleet){
+		req.flash('error', "Couldnt find that fleet!");
+		return res.redirect("/fleets");
+	}
 	res.render("fleets/edit.ejs", { theFleet });
 }));
 
@@ -49,7 +53,8 @@ router.post("/", validateFleet ,catchAsync(async (req, res) => {
 	var d = new Date(Date.now());
 	newFleet.time = convertISt12(d.toString());
 	await newFleet.save();
-	res.redirect("/fleets");
+	req.flash('success', "Your tweet was uploaded");
+	res.redirect(`/fleets/${newFleet._id}`);
 }));
 
 router.put("/:id", validateFleet,catchAsync(async (req, res) => {
@@ -59,12 +64,14 @@ router.put("/:id", validateFleet,catchAsync(async (req, res) => {
 		req.body.fleet,
 		{ runValidators: true }
 	);
+	req.flash('success',"Successfully updated your tweet");
 	res.redirect(`/fleets/${id}`);
 }));
 
 router.delete("/:id", catchAsync(async (req, res) => {
 	const { id } = req.params;
 	await Fleet.findByIdAndDelete(id);
+	req.flash('success',"Deleted your tweet");
 	res.redirect("/fleets");
 }));
 

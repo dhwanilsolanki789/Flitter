@@ -23,8 +23,10 @@ router.get("/:cid", catchAsync(async (req,res) => {
 	const { id, cid } = req.params;
 	const theFleet = await Fleet.findById(id);
 	const theComment = await Comment.findById(cid).populate('fleet');
-	if(!theComment)
-		throw new expressError("Comment not found!",404);
+	if(!theComment){
+		req.flash('error',"Couldnt find that comment!");
+		return res.redirect("/fleets");
+	}
 	res.render("comments/details.ejs", { theComment, theFleet });
 }));
 
@@ -39,13 +41,15 @@ router.post("/", validateComment ,catchAsync(async(req,res) => {
 	newComment.fleet = theFleet;
 	await theFleet.save();
 	await newComment.save();
+	req.flash('success', "Successfully added your comment");
 	res.redirect(`/fleets/${id}`);
 }));
 
 router.delete("/:cid", catchAsync(async(req,res) => {
 	const { cid, id } = req.params;
-	await Fleet.findByIdAndUpdate(id,{$pull : {comments : cid}})
+	await Fleet.findByIdAndUpdate(id,{$pull : {comments : cid}});
 	await Comment.findByIdAndDelete(cid);
+	req.flash('success', "Deleted your comment");
 	res.redirect(`/fleets/${id}`); 
 }));
 

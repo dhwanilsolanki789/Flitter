@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import methodOverride from "method-override";
 import ejsMate from "ejs-mate";
 import session from "express-session";
+import flash from "connect-flash";
 import path from "path";
 import { expressError } from "./utils/expressError.js";
 
@@ -39,6 +40,13 @@ const sessionConfigs = {
 	saveUninitialized: true 
 }
 app.use(session(sessionConfigs));
+app.use(flash());
+
+app.use((req,res,next) => {
+	res.locals.success = req.flash('success');
+	res.locals.error = req.flash('error');
+	next();
+})
 
 app.use('/fleets',fleetRoutes);
 app.use('/fleets/:id/comments',commentRoutes);

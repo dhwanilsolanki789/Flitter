@@ -3,24 +3,25 @@
     <hr>
 
     <div class="offset-sm-2 col-sm-8">
-        <div class="container py-sm-3">
-            <a href="/fleets/new" style="margin-left: 20px;">New Fleet</a>
-        </div>
-        <ul style="list-style-type:none; padding-left: 0px;">
-            <% for(let t of allFleets) { %>
-                <li>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= t.username %>
-                            </h5>
-                            <p class="card-text">
-                                <%= t.text %>
-                            </p>
-                            <a href="/fleets/<%= t._id%>" class="card-link">Details</a>
+        <%- include('../partials/flash.ejs') %>
+            <div class="container py-sm-3">
+                <a href="/fleets/new" style="margin-left: 20px;">New Fleet</a>
+            </div>
+            <ul style="list-style-type:none; padding-left: 0px;">
+                <% for(let t of allFleets) { %>
+                    <li>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= t.username %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= t.text %>
+                                </p>
+                                <a href="/fleets/<%= t._id%>" class="card-link">Details</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <% } %>
-        </ul>
+                    </li>
+                    <% } %>
+            </ul>
     </div>
