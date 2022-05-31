@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Fleet from "./fleet.js";
 
 const commentSchema = new mongoose.Schema({
     username: {

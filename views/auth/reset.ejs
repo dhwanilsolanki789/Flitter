@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+    <div class="container col-5 m-auto">
+        <div class="shadow card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Reset password</h2>
+                <p class="card-text">
+                    <%- include("../partials/flash.ejs") %>
+                        <form action="/auth/reset/<%= id %>" method="POST" class="validate-form mb-3" novalidate>
+                            <label for="password" class="form-label">New Password</label>
+                            <input type="password" name="password" id="password" class="form-control mb-3" required>
+                            <label for="password2" class="form-label">Re-enter Password</label>
+                            <input type="password" name="password2" id="password2" class="form-control mb-3" required>
+                            <button class="btn btn-info offset-3 col-6">
+                                Reset
+                            </button>
+                        </form>
+                </p>
+            </div>
+        </div>
+    </div>

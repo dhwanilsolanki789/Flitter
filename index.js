@@ -3,10 +3,14 @@ import mongoose from "mongoose";
 import methodOverride from "method-override";
 import ejsMate from "ejs-mate";
 import session from "express-session";
+import passport from "passport";
+import cookieParser from "cookie-parser";
 import flash from "connect-flash";
 import path from "path";
 import { expressError } from "./utils/expressError.js";
+import User from "./models/user.js";
 
+import authRoutes from "./routes/auth.js";
 import fleetRoutes from "./routes/fleets.js"
 import commentRoutes from "./routes/comments.js"
 
@@ -30,6 +34,7 @@ const app = express();
 app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"/public")));
@@ -40,14 +45,29 @@ const sessionConfigs = {
 	saveUninitialized: true 
 }
 app.use(session(sessionConfigs));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
+
 app.use(flash());
 
 app.use((req,res,next) => {
+	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	next();
 })
 
+app.use('/auth',authRoutes);
 app.use('/fleets',fleetRoutes);
 app.use('/fleets/:id/comments',commentRoutes);
 

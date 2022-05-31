@@ -1,0 +1,22 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+    <div class="container col-5 m-auto">
+        <div class="shadow card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Forgot password</h2>
+                <p class="card-text">
+                    <%- include("../partials/flash.ejs") %>
+                        <form action="/auth/forgot" method="POST" class="validate-form mb-5" novalidate>
+                            <label for="email" class="form-label">Registered email</label>
+                            <input type="email" name="email" id="email" class="form-control mb-3" required>
+                            <button class="btn btn-info offset-3 col-6">
+                                Send mail
+                            </button>
+                        </form>
+                        <div class="text-center">
+                            <p>Remember your pasword? <a href="/auth/login" class="card-link">Sign in</a></p>
+                        </div>
+                </p>
+            </div>
+        </div>
+    </div>

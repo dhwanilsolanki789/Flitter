@@ -13,7 +13,6 @@ const fleetSchema = new mongoose.Schema({
 	},
 	time: {
 		type: String,
-		default: "00:00",
 	},
 	likes: {
 		type: Number,

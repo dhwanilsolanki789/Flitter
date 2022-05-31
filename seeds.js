@@ -35,37 +35,37 @@ testfleet
 // 	{
 // 		username: "paineAlice",
 // 		text: "Done with my first fleet <3",
-// 		time: "06:45 PM",
+// 		time: "6:45 PM 24 February 2022",
 // 		likes: 73774,
 // 	},
 // 	//{
 // 	//	username: "steveDetamble",
 // 	//	text: "Guys, i think you should bring dms :)",
-// 	//	time: "01:39 AM",
+// 	//	time: "7:28 PM 24 February 2022",
 // 	//	likes: 1105,
 // 	//},
 // 	{
 // 		username: "DevKothari",
 // 		text: "Another shitty social media site..",
-// 		time: "10:25 AM",
+// 		time: "10:25 AM 26 February 2022",
 // 		likes: 5480,
 // 	},
 // 	{
 // 		username: "AndrewFC",
 // 		text: "Andrew is the best SPIDERMAN no cap!!",
-// 		time: "02:41 PM",
+// 		time: "2:41 PM 28 February 2022",
 // 		likes: 11345,
 // 	},
 // 	{
 // 		username: "Kevinf",
 // 		text: "SHUT the FUck upppppp",
-// 		time: "06:47 AM",
+// 		time: "2:45 PM 28 February 2022",
 // 		likes: 32344,
 // 	},
 // 	{
 // 		username: "Flitter",
 // 		text: "@elonmusk this is not twitter please stfu!!",
-// 		time: "10:37 PM",
+// 		time: "10:37 PM 1 March 2022",
 // 		likes: 99287,
 // 	},
 // ];

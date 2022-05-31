@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate.ejs') -%>
+
+    <div class="container col-5 m-auto">
+        <div class="shadow card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Sign up for Flitter</h2>
+                <p class="card-text">
+                    <%- include("../partials/flash.ejs") %>
+                        <form action="/auth/register" method="POST" class="validate-form mb-4" novalidate>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name"
+                                value="<%= typeof name != 'undefined' ? name : '' %>" class="form-control mb-2"
+                                required>
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username"
+                                value="<%= typeof username != 'undefined' ? username : '' %>" class="form-control mb-2"
+                                required>
+                            <label for="email" class="form-label">Email id</label>
+                            <input type="email" name="email" id="email"
+                                value="<%= typeof email != 'undefined' ? email : '' %>" class="form-control mb-2"
+                                required>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control mb-2" required>
+                            <label for="password2" class="form-label">Retype password</label>
+                            <input type="password" name="password2" id="password2" class="form-control mb-3" required>
+                            <button class="btn btn-info offset-3 col-6">
+                                Sign up
+                            </button>
+                        </form>
+                        <div class="text-center">
+                            <p>Already have an account? <a href="/auth/login" class="card-link">Sign in</a></p>
+                        </div>
+                </p>
+            </div>
+        </div>
+    </div>
