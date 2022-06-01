@@ -19,6 +19,10 @@ const commentSchema = new mongoose.Schema({
         min : 0,
         default : 0
     },
+    author: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     fleet: {
         type : mongoose.Schema.Types.ObjectId,
         ref: 'Fleet'

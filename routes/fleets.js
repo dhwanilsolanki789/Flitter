@@ -1,33 +1,22 @@
 import express from "express";
 import Fleet from "../models/fleet.js";
-import fleetSchema from "../joiSchemas/joiFleet.js";
 
-import { expressError } from "../utils/expressError.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { convertISt12, getLikes, } from "../utils/helper.js";
+import { isLoggedIn, isAuthor, validateFleet } from "../middleware.js";
 
 const router = express.Router();
-
-const validateFleet = (req,res,next) => {
-	const { error } = fleetSchema.validate(req.body);
-	if(error) {
-		const msg = error.details.map(el => el.message).join(',');
-		throw new expressError(msg,400);
-	} else {
-		next();
-	}
-}
 
 router.get("/", catchAsync(async (req, res) => {
 	const allFleets = await Fleet.find({});
 	res.render("fleets/fleet.ejs", { allFleets });
 }));
 
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn ,(req, res) => {
 	res.render("fleets/new.ejs");
 });
 
-router.get("/:id", catchAsync(async (req, res, next) => {
+router.get("/:id", isLoggedIn ,catchAsync(async (req, res, next) => {
 	const { id } = req.params;
 	const theFleet = await Fleet.findById(id).populate("comments");
 	if(!theFleet){
@@ -37,19 +26,17 @@ router.get("/:id", catchAsync(async (req, res, next) => {
 	res.render("fleets/details.ejs", { theFleet });
 }));
 
-router.get("/:id/edit", catchAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn, isAuthor ,catchAsync(async (req, res) => {
 	const { id } = req.params;
 	const theFleet = await Fleet.findById(id);
-	if(!theFleet){
-		req.flash('error', "Couldnt find that fleet!");
-		return res.redirect("/fleets");
-	}
 	res.render("fleets/edit.ejs", { theFleet });
 }));
 
-router.post("/", validateFleet ,catchAsync(async (req, res) => {
+router.post("/", isLoggedIn ,validateFleet ,catchAsync(async (req, res) => {
+	req.body.fleet.username = req.user.username;
 	req.body.fleet.likes = getLikes();
 	const newFleet = new Fleet(req.body.fleet);
+	newFleet.author = req.user;
 	var d = new Date(Date.now());
 	newFleet.time = convertISt12(d.toString());
 	await newFleet.save();
@@ -57,7 +44,7 @@ router.post("/", validateFleet ,catchAsync(async (req, res) => {
 	res.redirect(`/fleets/${newFleet._id}`);
 }));
 
-router.put("/:id", validateFleet,catchAsync(async (req, res) => {
+router.put("/:id", isLoggedIn ,isAuthor ,validateFleet,catchAsync(async (req, res) => {
 	const { id } = req.params;
 	await Fleet.findByIdAndUpdate(
 		id,
@@ -68,7 +55,7 @@ router.put("/:id", validateFleet,catchAsync(async (req, res) => {
 	res.redirect(`/fleets/${id}`);
 }));
 
-router.delete("/:id", catchAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn ,isAuthor ,catchAsync(async (req, res) => {
 	const { id } = req.params;
 	await Fleet.findByIdAndDelete(id);
 	req.flash('success',"Deleted your tweet");

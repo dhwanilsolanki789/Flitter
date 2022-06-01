@@ -19,6 +19,10 @@ const fleetSchema = new mongoose.Schema({
 		min: 0,
 		default: 0,
 	},
+	author: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	comments : [
 		{
 			type : mongoose.Schema.Types.ObjectId,
@@ -30,7 +34,6 @@ const fleetSchema = new mongoose.Schema({
 fleetSchema.post('findOneAndDelete', async function(data) {
 	if(data.comments.length){
 		const res = await Comment.deleteMany({ _id : {$in : data.comments }});
-		console.log(res);
 	}
 })
 

@@ -256,20 +256,23 @@ router.post('/reset/:id', (req,res,next) => {
 })
 
 router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login',
+    failureRedirect: '/auth/login',
     failureFlash: true
 }), (req,res) => {
     req.flash('success',`Welcome to Flitter, ${req.user.username}`);
-    res.redirect("/fleets");
+    const redirectUrl = req.session.returnTo || "/fleets";
+    res.redirect(redirectUrl);
 })
 
 router.get('/logout', (req,res,next) => {
     req.logout(err => {
-        console.log(err);
-        return next(err);
+        if(err){
+            console.log(err);
+            return next(err);
+        }
+        req.flash('success',"Successfully logged you out!");
+        res.redirect("/auth/login");
     });
-    req.flash('success',"Successfully logged you out!");
-    res.redirect("/auth/login");
 })
 
 export default router;

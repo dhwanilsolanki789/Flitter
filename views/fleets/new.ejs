@@ -5,17 +5,12 @@
     <hr>
     <div class="container mt-4">
         <form action="/fleets" method="POST" class="validate-form" novalidate>
-            <div class="mb-3 offset-3 col-6">
-                <label for="username" class="form-label">Username:</label>
-                <input type="text" name="fleet[username]" id="username" class="form-control"
-                    placeholder="Write your username" required>
-            </div>
-            <div class="mb-3 offset-3 col-6">
+            <div class="mb-3 container offset-sm-3 col-sm-6">
                 <label for="text" class="form-label">Fleet:</label>
                 <textarea name="fleet[text]" id="text" cols="30" rows="5" class="form-control"
                     placeholder="Your fleet here..." required></textarea>
             </div>
-            <div class="mb-3 offset-3">
+            <div class="mb-3 container offset-sm-3">
                 <button class="btn btn-success">Post</button>
             </div>
         </form>

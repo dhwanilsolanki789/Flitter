@@ -34,9 +34,12 @@
                     </b> Likes &middot;
                     <%= theComment.time %>
                 </div>
-                <form action="/fleets/<%= theFleet._id %>/comments/<%= theComment._id %>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+                <% if(currentUser && theComment.author.equals(currentUser._id)) { %>
+                    <form action="/fleets/<%= theFleet._id %>/comments/<%= theComment._id %>?_method=DELETE"
+                        method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %>
             </div>
         </div>
     </div>

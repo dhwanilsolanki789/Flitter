@@ -1,25 +1,14 @@
 import express from "express";
 import Fleet from "../models/fleet.js";
 import Comment from "../models/comment.js";
-import commentSchema from "../joiSchemas/joiComment.js";
 
-import { expressError } from "../utils/expressError.js";
 import { catchAsync } from "../utils/catchAsync.js";
 import { convertISt12, getLikes, } from "../utils/helper.js";
+import { isLoggedIn, isCommentAuthor ,validateComment } from "../middleware.js";
 
 const router = express.Router({mergeParams:true});
 
-const validateComment = (req,res,next) => {
-	const { error } = commentSchema.validate(req.body);
-	if(error) {
-		const msg = error.details.map(el => el.message).join(',');
-		throw new expressError(msg,400);
-	} else {
-		next();
-	}
-}
-
-router.get("/:cid", catchAsync(async (req,res) => {
+router.get("/:cid", isLoggedIn ,catchAsync(async (req,res) => {
 	const { id, cid } = req.params;
 	const theFleet = await Fleet.findById(id);
 	const theComment = await Comment.findById(cid).populate('fleet');
@@ -30,11 +19,13 @@ router.get("/:cid", catchAsync(async (req,res) => {
 	res.render("comments/details.ejs", { theComment, theFleet });
 }));
 
-router.post("/", validateComment ,catchAsync(async(req,res) => {
+router.post("/", isLoggedIn ,validateComment ,catchAsync(async(req,res) => {
 	const { id } = req.params;
 	const theFleet = await Fleet.findById(id);
+	req.body.comment.username = req.user.username;
 	req.body.comment.likes = getLikes();
 	const newComment = new Comment(req.body.comment);
+	newComment.author = req.user;
 	var d = new Date(Date.now());
 	newComment.time = convertISt12(d.toString());
 	theFleet.comments.push(newComment);
@@ -45,7 +36,7 @@ router.post("/", validateComment ,catchAsync(async(req,res) => {
 	res.redirect(`/fleets/${id}`);
 }));
 
-router.delete("/:cid", catchAsync(async(req,res) => {
+router.delete("/:cid", isLoggedIn, isCommentAuthor ,catchAsync(async(req,res) => {
 	const { cid, id } = req.params;
 	await Fleet.findByIdAndUpdate(id,{$pull : {comments : cid}});
 	await Comment.findByIdAndDelete(cid);

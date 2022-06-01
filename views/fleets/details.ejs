@@ -25,31 +25,29 @@
                         <%= theFleet.time %>
                     </div>
                     </p>
-                    <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>/edit">
-                        <button class="btn btn-info">Edit tweet</button>
-                    </form>
-                    <form class="mb-3" style="display: inline-block;"
-                        action="/fleets/<%= theFleet._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger">Delete tweet</button>
-                    </form> </br>
-                    <h6>Leave a comment</h6>
-                    <form action="/fleets/<%= theFleet._id %>/comments" method="POST" class="validate-form" novalidate>
-                        <div class="row">
-                            <div class="col-6">
-                                <input type="text" name="comment[username]" id="username" class="form-control"
-                                    placeholder="Your username" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <textarea name="comment[text]" id="text" cols="10" rows="2" class="form-control"
-                                    placeholder="Reply to fleet" required></textarea>
-                            </div>
-                            <div class="col-md-2 pt-3">
-                                <button class="btn btn-sm btn-success">Post</button>
-                            </div>
-                        </div>
-                    </form>
+                    <hr>
+                    <% if(currentUser && theFleet.author.equals(currentUser._id)) { %>
+                        <form style="display: inline-block;" action="/fleets/<%= theFleet._id %>/edit">
+                            <button class="btn btn-info">Edit tweet</button>
+                        </form>
+                        <form class="mb-3" style="display: inline-block;"
+                            action="/fleets/<%= theFleet._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete tweet</button>
+                        </form> </br>
+                        <% } %>
+                            <h6>Leave a comment</h6>
+                            <form action="/fleets/<%= theFleet._id %>/comments" method="POST" class="validate-form"
+                                novalidate>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <textarea name="comment[text]" id="text" cols="10" rows="2" class="form-control"
+                                            placeholder="Reply to fleet" required></textarea>
+                                    </div>
+                                    <div class="col-md-2 pt-3">
+                                        <button class="btn btn-sm btn-success">Post</button>
+                                    </div>
+                                </div>
+                            </form>
                 </div>
 
             </div>
@@ -68,12 +66,15 @@
                                 <%= comment.text %></br>
                                     <a href="/fleets/<%= theFleet._id %>/comments/<%= comment._id %>">Details</a>
                             </div>
-                            <div class="col-2">
-                                <form action="/fleets/<%= theFleet._id %>/comments/<%= comment._id %>?_method=DELETE"
-                                    method="POST">
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </div>
+                            <% if(currentUser && comment.author.equals(currentUser._id)) { %>
+                                <div class="col-2">
+                                    <form
+                                        action="/fleets/<%= theFleet._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                        method="POST">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                                <% } %>
                         </div>
 
                         </p>
